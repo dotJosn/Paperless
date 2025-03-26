@@ -1,33 +1,29 @@
-name: Lint Check
+name: Biome lint
 
 on:
   pull_request:
-    branches: [ main ]
-  push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   lint:
-    name: Run Linter
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      - uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
-    - name: Install dependencies
-      run: npm install
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
-     - name: Install Next.js
-     run: npm install next
+      - name: Install dependencies
+        run: pnpm install
 
-    - name: Run ESLint
-      run: npm run lint
+      - name: Run Biome lint
+        run: pnpm exec biome lint
