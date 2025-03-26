@@ -24,5 +24,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+     - name: Install Next.js
+     run: npm install next
+
     - name: Run ESLint
       run: npm run lint
