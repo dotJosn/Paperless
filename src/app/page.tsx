@@ -1,11 +1,6 @@
-interface Props {}
+function Page() {
 
-function Page(props: Props) {
-  const {} = props
-
-  return (
-    <h1>Hello</h1>
-  )
+  return <h1>Hello</h1>;
 }
 
-export default Page
+export default Page;
