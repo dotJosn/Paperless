@@ -1,7 +1,7 @@
 "use client";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface ThemeComProps {
   children: ReactNode;
@@ -26,7 +26,7 @@ export default function ThemeCom({ children }: ThemeComProps) {
 
   return (
     <div className={theme}>
-      <div className="bg-white text-gray-700 dark:text-gray-200 dark:bg-gray-900 min-h-screen">
+      <div className='min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-200'>
         {children}
       </div>
     </div>
