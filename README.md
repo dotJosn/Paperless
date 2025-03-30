@@ -8,6 +8,6 @@ Paperless is a web-based academic project, designed to replace manual paper-base
 
 ## 👥 Authors
 - [Adrian Netto](https://github.com/AdrianNetto)
-- [Allan Pacheco](https://github.com/Allan)
+- [Allan Pacheco](https://github.com/allanpacheco-cmd)
 - [Gustavo Pampu](https://github.com/guleDev)
 - [Tiago Nogueira](https://github.com/TiagoGrebogi)
