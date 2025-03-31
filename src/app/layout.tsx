@@ -30,19 +30,17 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <ClerkLoading>
-             <StarLoader />
+            <StarLoader />
           </ClerkLoading>
           <ClerkLoaded>
-          <ThemeProvider>
-            <ThemeCom>
-              <Header />
-              {children}
-            </ThemeCom>
-          </ThemeProvider>
+            <ThemeProvider>
+              <ThemeCom>
+                <Header />
+                {children}
+              </ThemeCom>
+            </ThemeProvider>
           </ClerkLoaded>
         </body>
       </html>
