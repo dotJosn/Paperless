@@ -38,7 +38,9 @@ export default function RootLayout({
             <ThemeProvider>
               <ThemeCom>
                 <Header />
-                {children}
+                <main>
+                  {children}
+                </main>
               </ThemeCom>
             </ThemeProvider>
           </ClerkLoaded>
