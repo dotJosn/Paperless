@@ -63,6 +63,12 @@ export default function Header() {
             >
               Sobre o Paperless
             </Link>
+            <Link
+              href="/contato"
+              className={`transition-colors duration-300 hover:text-gray-400 ${pathname === '/contato' ? 'font-bold underline' : ''}`}
+            >
+              Contato
+            </Link>
           </nav>
 
           <div className="flex items-center space-x-4">
@@ -117,6 +123,13 @@ export default function Header() {
             onClick={toggleMobileMenu}
           >
             Sobre o Paperless
+          </Link>
+          <Link
+            href="/contato"
+            className="block py-3 transition-colors duration-300 hover:text-gray-400"
+            onClick={toggleMobileMenu}
+          >
+            Contato
           </Link>
         </div>
       </div>
