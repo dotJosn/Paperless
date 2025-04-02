@@ -7,7 +7,6 @@ export default function HTMLPreviewer() {
   const [fileName, setFileName] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Clean up object URLs
   useEffect(() => {
     return () => {
       if (previewUrl) {
