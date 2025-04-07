@@ -1,4 +1,3 @@
-// app/page.tsx
 import HTMLPreviewer from '@/app/components/HTMLPreviewer';
 
 export default function Home() {

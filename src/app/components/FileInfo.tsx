@@ -1,5 +1,4 @@
 "use client";
-
 interface FileInfoProps {
   fileName: string;
   progress?: number;
