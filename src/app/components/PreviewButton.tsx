@@ -1,4 +1,4 @@
-"use client";
+'use client';
 interface PreviewButtonProps {
   onClick: () => void;
 }
@@ -6,10 +6,9 @@ interface PreviewButtonProps {
 export default function PreviewButton({ onClick }: PreviewButtonProps) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="mb-4 px-6 py-3 bg-[#062E29] text-white rounded-md
-               hover:bg-green-600 transition-colors font-medium
-               focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      className="mb-4 rounded-md bg-[#062E29] px-6 py-3 font-medium text-white transition-colors hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
     >
       Show Preview
     </button>

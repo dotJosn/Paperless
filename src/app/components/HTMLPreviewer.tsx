@@ -1,5 +1,5 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 
 export default function HTMLPreviewer() {
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
@@ -52,7 +52,7 @@ export default function HTMLPreviewer() {
       URL.revokeObjectURL(previewUrl);
       setPreviewUrl(null);
     } else if (htmlContent) {
-      const blob = new Blob([htmlContent], { type: "text/html" });
+      const blob = new Blob([htmlContent], { type: 'text/html' });
       const url = URL.createObjectURL(blob);
       setPreviewUrl(url);
     }
@@ -60,64 +60,65 @@ export default function HTMLPreviewer() {
 
   return (
     <div className="min-h-screen p-8">
-      <div className="max-w-2xl mx-auto text-center">
-        <h1 className="text-3xl font-bold mb-6 text-white">Paperless HTML Previewer</h1>
+      <div className="mx-auto max-w-2xl text-center">
+        <h1 className="mb-6 font-bold text-3xl text-white">Paperless HTML Previewer</h1>
 
         <label
-          className={`block mb-4 border-2 ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
-            } border-dashed rounded-md p-8 text-center transition-colors cursor-pointer`}
+          className={`mb-4 block border-2 ${
+            isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+          } cursor-pointer rounded-md border-dashed p-8 text-center transition-colors`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
           <div className="flex flex-col items-center justify-center space-y-2">
             <svg
-              className="w-12 h-12 text-gray-400"
+              className="h-12 w-12 text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="image"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              ></path>
+              />
             </svg>
 
-            <p className="text-sm text-gray-600">
+            <p className="text-gray-600 text-sm">
               <span className="font-semibold text-blue-600">Click to upload</span> or drag and drop
             </p>
-            <p className="text-xs text-gray-500">HTML files only</p>
+            <p className="text-gray-500 text-xs">HTML files only</p>
 
             <input type="file" accept=".html,text/html" onChange={handleFileInput} className="hidden" />
           </div>
         </label>
 
         {fileName && (
-          <div className="mb-4 p-3 bg-white rounded-md border border-gray-200">
-            <p className="text-sm font-medium text-gray-700">
+          <div className="mb-4 rounded-md border border-gray-200 bg-white p-3">
+            <p className="font-medium text-gray-700 text-sm">
               Selected file: <span className="text-blue-600">{fileName}</span>
             </p>
           </div>
         )}
 
         {htmlContent && (
-          <div className="flex justify-center items-center gap-10 mb-4">
+          <div className="mb-4 flex items-center justify-center gap-10">
             <button
+              type="button"
               onClick={togglePreview}
-              className="mb-4 px-6 py-3 bg-green-500 text-white rounded-md
-            hover:bg-green-600 transition-colors font-medium
-            focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
+              className="mb-4 cursor-pointer rounded-md bg-green-500 px-6 py-3 font-medium text-white transition-colors hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
-              {previewUrl ? "Esconder Preview" : "Mostrar Preview"}
+              {previewUrl ? 'Esconder Preview' : 'Mostrar Preview'}
             </button>
 
             <button
-              className="mb-4 px-6 py-3 bg-green-500 text-white rounded-md
-            hover:bg-green-600 transition-colors font-medium
-            focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
+              type="button"
+              className="mb-4 cursor-pointer rounded-md bg-green-500 px-6 py-3 font-medium text-white transition-colors hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
               Enviar
             </button>
@@ -125,19 +126,14 @@ export default function HTMLPreviewer() {
         )}
 
         {previewUrl && (
-          <div className="mt-6 border rounded-lg overflow-hidden shadow-lg bg-white">
-            <div className="px-4 py-3 border-b bg-gray-50 flex justify-between items-center">
+          <div className="mt-6 overflow-hidden rounded-lg border bg-white shadow-lg">
+            <div className="flex items-center justify-between border-b bg-gray-50 px-4 py-3">
               <h3 className="font-medium text-gray-700">HTML Preview</h3>
-              <a
-                href={previewUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-blue-600 hover:underline"
-              >
+              <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 text-sm hover:underline">
                 Open in new tab
               </a>
             </div>
-            <iframe title="HTML Preview" src={previewUrl} className="w-full h-96" sandbox="allow-scripts" />
+            <iframe title="HTML Preview" src={previewUrl} className="h-96 w-full" sandbox="allow-scripts" />
           </div>
         )}
       </div>

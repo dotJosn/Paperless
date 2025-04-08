@@ -29,18 +29,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <ClerkLoading>
-             <StarLoader />
+            <StarLoader />
           </ClerkLoading>
           <ClerkLoaded>
-          <ThemeProvider>
-            <ThemeCom>
-              {children}
-            </ThemeCom>
-          </ThemeProvider>
+            <ThemeProvider>
+              <ThemeCom>{children}</ThemeCom>
+            </ThemeProvider>
           </ClerkLoaded>
         </body>
       </html>
