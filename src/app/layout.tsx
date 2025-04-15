@@ -5,6 +5,7 @@ import { ClerkLoaded, ClerkLoading, ClerkProvider } from '@clerk/nextjs';
 import StarLoader from './components/Loader';
 import { ThemeProvider } from 'next-themes';
 import ThemeCom from './components/ThemeCom';
+import Header from './components/Header';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -17,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Simoldes',
-  description: 'Project developed by Josn group to Simoldes during a college work'
+  title: 'Paperless',
+  description: 'Paperless is a project developed by Josn group to Simoldes during a college work'
 };
 
 export default function RootLayout({
@@ -29,18 +30,19 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <ClerkLoading>
-             <StarLoader />
+            <StarLoader />
           </ClerkLoading>
           <ClerkLoaded>
-          <ThemeProvider>
-            <ThemeCom>
-              {children}
-            </ThemeCom>
-          </ThemeProvider>
+            <ThemeProvider>
+              <ThemeCom>
+                <Header />
+                <main>
+                  {children}
+                </main>
+              </ThemeCom>
+            </ThemeProvider>
           </ClerkLoaded>
         </body>
       </html>
