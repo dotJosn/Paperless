@@ -1,0 +1,30 @@
+name: Check Branch Name
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch naming convention
+        run: |
+          # Obtém o nome da branch (para PRs ou pushes)
+          if [ -n "$GITHUB_HEAD_REF" ]; then
+            BRANCH_NAME="$GITHUB_HEAD_REF"  # Branch de PR
+          else
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"  # Branch em push direto
+          fi
+
+          # Verifica se o nome segue o padrão feat/, fix/, ou chore/
+          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|chore)/ ]]; then
+            echo "❌ Erro: O nome da branch '$BRANCH_NAME' deve começar com 'feat/', 'fix/' ou 'chore/'."
+            echo "Exemplos válidos: feat/nova-funcionalidade, fix/correcao-bug, chore/atualizacao-deps"
+            exit 1  # Falha intencionalmente o workflow
+          else
+            echo "✅ Nome da branch válido: $BRANCH_NAME"
+          fi
