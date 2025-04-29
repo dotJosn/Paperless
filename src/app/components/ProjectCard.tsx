@@ -1,5 +1,5 @@
 'use client';
-import { Project } from '@/app/lib/types/project';
+import type { Project } from '@/app/lib/types/project';
 import { FiChevronDown, FiChevronUp, FiTrash2 } from 'react-icons/fi';
 import StageItem from '@/app/components/StageItem';
 
@@ -11,9 +11,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, isExpanded, onToggle, onDelete }: ProjectCardProps) {
-  const progress = Math.round(
-    (project.stages.filter(s => s.status === 'completed').length / project.stages.length) * 100
-  );
+  const progress = Math.round((project.stages.filter((s) => s.status === 'completed').length / project.stages.length) * 100);
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -23,29 +21,27 @@ export default function ProjectCard({ project, isExpanded, onToggle, onDelete }:
   };
 
   return (
-    <div className="bg-[#09212D] rounded-lg overflow-hidden border border-[#0A4338]/30">
-      <div 
-        className="p-4 cursor-pointer flex justify-between items-center hover:bg-[#0A4338]/20 transition-colors"
+    <div className="overflow-hidden rounded-lg border border-[#0A4338]/30 bg-[#09212D]">
+      <div
+        className="flex cursor-pointer items-center justify-between p-4 transition-colors hover:bg-[#0A4338]/20"
         onClick={onToggle}
       >
         <div className="flex items-center">
-          <div className={`w-3 h-3 rounded-full mr-3 ${project.color}`}></div>
+          <div className={`mr-3 h-3 w-3 rounded-full ${project.color}`} />
           <div>
             <h2 className="font-bold text-lg">{project.name}</h2>
-            <p className="text-sm text-gray-400">{project.description}</p>
+            <p className="text-gray-400 text-sm">{project.description}</p>
           </div>
         </div>
         <div className="flex items-center">
-          <div className="w-32 bg-gray-700 rounded-full h-2 mr-4">
-            <div 
-              className={`h-2 rounded-full ${project.color}`} 
-              style={{ width: `${progress}%` }}
-            ></div>
+          <div className="mr-4 h-2 w-32 rounded-full bg-gray-700">
+            <div className={`h-2 rounded-full ${project.color}`} style={{ width: `${progress}%` }} />
           </div>
-          <span className="text-sm font-medium mr-3">{progress}%</span>
-          <button 
+          <span className="mr-3 font-medium text-sm">{progress}%</span>
+          <button
+            type="button"
             onClick={handleDelete}
-            className="text-gray-400 hover:text-red-500 p-1 mr-2 transition-colors"
+            className="mr-2 p-1 text-gray-400 transition-colors hover:text-red-500"
             title="Excluir projeto"
           >
             <FiTrash2 />
@@ -55,23 +51,29 @@ export default function ProjectCard({ project, isExpanded, onToggle, onDelete }:
       </div>
 
       {isExpanded && (
-        <div className="border-t border-[#0A4338]/30 p-4">
-          <div className="grid grid-cols-5 gap-2 mb-2 px-4 text-sm text-gray-400">
+        <div className="border-[#0A4338]/30 border-t p-4">
+          <div className="mb-2 grid grid-cols-5 gap-2 px-4 text-gray-400 text-sm">
             <div>Status</div>
             <div className="col-span-2">Etapa</div>
             <div>Responsável</div>
             <div>Prazo</div>
           </div>
-          
+
           {project.stages.map((stage) => (
             <StageItem key={stage.id} stage={stage} />
           ))}
 
-          <div className="flex justify-end mt-4 space-x-3">
-            <button className="px-3 py-1 text-sm border border-[#0A4338] text-white bg-[#0A4338]/50 hover:bg-[#0A4338] rounded transition-colors">
+          <div className="mt-4 flex justify-end space-x-3">
+            <button
+              className="rounded border border-[#0A4338] bg-[#0A4338]/50 px-3 py-1 text-sm text-white transition-colors hover:bg-[#0A4338]"
+              type="button"
+            >
               Adicionar Etapa
             </button>
-            <button className="px-3 py-1 text-sm border border-gray-600 text-white hover:bg-gray-700 rounded transition-colors">
+            <button
+              className="rounded border border-gray-600 px-3 py-1 text-sm text-white transition-colors hover:bg-gray-700"
+              type="button"
+            >
               Editar Projeto
             </button>
           </div>

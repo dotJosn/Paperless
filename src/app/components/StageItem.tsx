@@ -1,5 +1,5 @@
 'use client';
-import { ProjectStage } from '@/app/lib/types/project';
+import type { ProjectStage } from '@/app/lib/types/project';
 import { FiCheck, FiClock, FiUsers } from 'react-icons/fi';
 
 interface StageItemProps {
@@ -8,7 +8,7 @@ interface StageItemProps {
 
 export default function StageItem({ stage }: StageItemProps) {
   return (
-    <div className="grid grid-cols-5 gap-2 items-center p-3 hover:bg-[#0A4338]/10 rounded-lg transition-colors">
+    <div className="grid grid-cols-5 items-center gap-2 rounded-lg p-3 transition-colors hover:bg-[#0A4338]/10">
       <div>
         {stage.status === 'completed' ? (
           <span className="inline-flex items-center text-green-500">
@@ -29,9 +29,7 @@ export default function StageItem({ stage }: StageItemProps) {
         <FiUsers className="mr-2 text-gray-400" />
         {stage.responsible}
       </div>
-      <div className="text-gray-400">
-        {new Date(stage.deadline).toLocaleDateString('pt-BR')}
-      </div>
+      <div className="text-gray-400">{new Date(stage.deadline).toLocaleDateString('pt-BR')}</div>
     </div>
   );
 }

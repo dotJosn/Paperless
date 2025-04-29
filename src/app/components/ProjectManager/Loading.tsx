@@ -2,8 +2,8 @@ import { FiLoader } from 'react-icons/fi';
 
 export default function Loading() {
   return (
-    <main className="min-h-screen bg-gray-900 text-white p-6 flex items-center justify-center">
-      <FiLoader className="animate-spin text-2xl mr-2" />
+    <main className="flex min-h-screen items-center justify-center bg-gray-900 p-6 text-white">
+      <FiLoader className="mr-2 animate-spin text-2xl" />
       Carregando projetos...
     </main>
   );

@@ -1,9 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Project } from '@/app/lib/types/project';
+import type { Project } from '@/app/lib/types/project';
 import projectsData from '@/app/lib/storage/projects.json';
-import ProjectCard from '@/app/components/ProjectCard';
-import SearchBar from '@/app/components/SearchBar';
 import HeaderSection from './HeaderSection';
 import ProjectsList from './ProjectsList';
 import Loading from './Loading';
@@ -26,9 +24,10 @@ const ProjectManager = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = projects.filter(project =>
-      project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchTerm.toLowerCase())
+    const filtered = projects.filter(
+      (project) =>
+        project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredProjects(filtered);
   }, [searchTerm, projects]);
@@ -46,12 +45,8 @@ const ProjectManager = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white p-6">
-      <HeaderSection
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        onNewProject={handleNewProject}
-      />
+    <main className="min-h-screen bg-gray-900 p-6 text-white">
+      <HeaderSection searchTerm={searchTerm} onSearchChange={setSearchTerm} onNewProject={handleNewProject} />
       <ProjectsList
         projects={filteredProjects}
         expandedProject={expandedProject}

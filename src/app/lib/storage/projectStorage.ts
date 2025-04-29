@@ -1,4 +1,4 @@
-import { Project } from '@/app/lib/types/project';
+import type { Project } from '@/app/lib/types/project';
 import projectsData from './projects.json';
 
 class ProjectStorage {
@@ -7,7 +7,7 @@ class ProjectStorage {
   }
 
   async getProjectById(id: string): Promise<Project | undefined> {
-    return projectsData.find(project => project.id === id) as Project | undefined;
+    return projectsData.find((project) => project.id === id) as Project | undefined;
   }
 }
 

@@ -1,9 +1,20 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { FiArrowLeft, FiUsers, FiBarChart2, FiEdit2, FiDownload, FiUserPlus, FiPrinter, FiUser, FiCalendar, FiLoader } from 'react-icons/fi';
+import {
+  FiArrowLeft,
+  FiUsers,
+  FiBarChart2,
+  FiEdit2,
+  FiDownload,
+  FiUserPlus,
+  FiPrinter,
+  FiUser,
+  FiCalendar,
+  FiLoader
+} from 'react-icons/fi';
 import Link from 'next/link';
-import { Project } from '@/app/lib/types/project';
+import type { Project } from '@/app/lib/types/project';
 import projectsData from '@/app/lib/storage/projects.json';
 
 export default function ProjectDetails() {
@@ -14,7 +25,7 @@ export default function ProjectDetails() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const foundProject = projectsData.find(p => p.id === projectId) as Project | undefined;
+      const foundProject = projectsData.find((p) => p.id === projectId) as Project | undefined;
       setProject(foundProject || null);
       setIsLoading(false);
     }, 500);
@@ -24,131 +35,123 @@ export default function ProjectDetails() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white p-6 flex items-center justify-center">
-        <FiLoader className="animate-spin text-2xl mr-2" />
+      <div className="flex min-h-screen items-center justify-center bg-gray-900 p-6 text-white">
+        <FiLoader className="mr-2 animate-spin text-2xl" />
         Carregando projeto...
       </div>
     );
   }
 
   if (!project) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white p-6 flex items-center justify-center">
-        Projeto não encontrado
-      </div>
-    );
+    return <div className="flex min-h-screen items-center justify-center bg-gray-900 p-6 text-white">Projeto não encontrado</div>;
   }
 
-  const progress = Math.round(
-    (project.stages.filter(s => s.status === 'completed').length / project.stages.length) * 100
-  );
+  const progress = Math.round((project.stages.filter((s) => s.status === 'completed').length / project.stages.length) * 100);
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white p-6">
+    <main className="min-h-screen bg-gray-900 p-6 text-white">
       <div className="container mx-auto px-4 py-8">
-        <Link href="/" className="flex items-center text-white hover:text-gray-300 mb-6 transition-colors">
+        <Link href="/" className="mb-6 flex items-center text-white transition-colors hover:text-gray-300">
           <FiArrowLeft className="mr-2" /> Voltar para projetos
         </Link>
 
-        <div className="flex justify-between items-start mb-6">
+        <div className="mb-6 flex items-start justify-between">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.name}</h1>
+            <h1 className="mb-2 font-bold text-2xl text-white md:text-3xl">{project.name}</h1>
             <p className="text-gray-300">{project.description}</p>
           </div>
-          <button 
-            className="flex items-center text-white hover:text-gray-300 transition-colors"
+          <button
+            className="flex items-center text-white transition-colors hover:text-gray-300"
             onClick={() => alert('Edição não disponível em JSON estático')}
           >
             <FiEdit2 className="mr-1" /> Editar
           </button>
         </div>
 
-        <div className="bg-[#09212D] rounded-xl p-6 mb-8 border border-[#0A4338]/30">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="mb-8 rounded-xl border border-[#0A4338]/30 bg-[#09212D] p-6">
+          <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
             <div className="flex items-center">
-              <FiBarChart2 className="text-2xl text-white mr-3" />
+              <FiBarChart2 className="mr-3 text-2xl text-white" />
               <div>
                 <p className="text-gray-400">Progresso</p>
-                <p className="text-xl font-bold text-white">{progress}%</p>
+                <p className="font-bold text-white text-xl">{progress}%</p>
               </div>
             </div>
             <div className="flex items-center">
-              <FiUsers className="text-2xl text-white mr-3" />
+              <FiUsers className="mr-3 text-2xl text-white" />
               <div>
                 <p className="text-gray-400">Membros</p>
-                <p className="text-xl font-bold text-white">{project.members}</p>
+                <p className="font-bold text-white text-xl">{project.members}</p>
               </div>
             </div>
           </div>
 
           <div className="mb-4">
-            <div className="flex justify-between text-sm mb-1 text-gray-300">
+            <div className="mb-1 flex justify-between text-gray-300 text-sm">
               <span>Progresso do Projeto</span>
               <span>{progress}%</span>
             </div>
-            <div className="w-full bg-gray-800 rounded-full h-2">
-              <div 
-                className="h-2 rounded-full bg-[#0A4338]" 
-                style={{ width: `${progress}%` }}
-              ></div>
+            <div className="h-2 w-full rounded-full bg-gray-800">
+              <div className="h-2 rounded-full bg-[#0A4338]" style={{ width: `${progress}%` }} />
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-[#09212D] rounded-xl p-6 border border-[#0A4338]/30">
-            <h2 className="text-xl font-semibold text-white mb-4">Etapas</h2>
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="rounded-xl border border-[#0A4338]/30 bg-[#09212D] p-6">
+            <h2 className="mb-4 font-semibold text-white text-xl">Etapas</h2>
             <div className="space-y-4">
               {project.stages.map((stage) => (
-                <div key={stage.id} className="bg-gray-800/50 p-4 rounded-lg">
-                  <div className="flex justify-between items-center mb-2">
+                <div key={stage.id} className="rounded-lg bg-gray-800/50 p-4">
+                  <div className="mb-2 flex items-center justify-between">
                     <h3 className="font-medium">{stage.name}</h3>
-                    <span className={`px-2 py-1 text-xs rounded ${
-                      stage.status === 'completed' ? 'bg-green-900 text-green-300' :
-                      stage.status === 'in-progress' ? 'bg-yellow-900 text-yellow-300' :
-                      'bg-gray-700 text-gray-400'
-                    }`}>
-                      {stage.status === 'completed' ? 'Concluído' :
-                       stage.status === 'in-progress' ? 'Em andamento' : 'Pendente'}
+                    <span
+                      className={`rounded px-2 py-1 text-xs ${
+                        stage.status === 'completed'
+                          ? 'bg-green-900 text-green-300'
+                          : stage.status === 'in-progress'
+                            ? 'bg-yellow-900 text-yellow-300'
+                            : 'bg-gray-700 text-gray-400'
+                      }`}
+                    >
+                      {stage.status === 'completed' ? 'Concluído' : stage.status === 'in-progress' ? 'Em andamento' : 'Pendente'}
                     </span>
                   </div>
-                  <div className="flex justify-between text-sm text-gray-400">
+                  <div className="flex justify-between text-gray-400 text-sm">
                     <div className="flex items-center">
                       <FiUser className="mr-1" />
                       <span>{stage.responsible}</span>
                     </div>
                     <div>
-                      <FiCalendar className="inline mr-1" />
+                      <FiCalendar className="mr-1 inline" />
                       <span>{new Date(stage.deadline).toLocaleDateString('pt-BR')}</span>
                     </div>
                   </div>
-                  {stage.description && (
-                    <p className="mt-2 text-gray-300 text-sm">{stage.description}</p>
-                  )}
+                  {stage.description && <p className="mt-2 text-gray-300 text-sm">{stage.description}</p>}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-[#09212D] rounded-xl p-6 border border-[#0A4338]/30">
-            <h2 className="text-xl font-semibold text-white mb-4">Ações</h2>
+          <div className="rounded-xl border border-[#0A4338]/30 bg-[#09212D] p-6">
+            <h2 className="mb-4 font-semibold text-white text-xl">Ações</h2>
             <div className="grid grid-cols-1 gap-4">
-              <button 
-                className="flex items-center justify-center bg-[#0A4338] hover:bg-[#062E29] text-white py-3 px-4 rounded-lg transition-colors"
+              <button
+                className="flex items-center justify-center rounded-lg bg-[#0A4338] px-4 py-3 text-white transition-colors hover:bg-[#062E29]"
                 onClick={() => alert('Funcionalidade não disponível em JSON estático')}
               >
                 <FiDownload className="mr-2" />
                 Adicionar Documento
               </button>
-              <button 
-                className="flex items-center justify-center bg-[#0A4338] hover:bg-[#062E29] text-white py-3 px-4 rounded-lg transition-colors"
+              <button
+                className="flex items-center justify-center rounded-lg bg-[#0A4338] px-4 py-3 text-white transition-colors hover:bg-[#062E29]"
                 onClick={() => alert('Funcionalidade não disponível em JSON estático')}
               >
                 <FiUserPlus className="mr-2" />
                 Gerenciar Membros
               </button>
-              <button 
-                className="flex items-center justify-center bg-[#0A4338] hover:bg-[#062E29] text-white py-3 px-4 rounded-lg transition-colors"
+              <button
+                className="flex items-center justify-center rounded-lg bg-[#0A4338] px-4 py-3 text-white transition-colors hover:bg-[#062E29]"
                 onClick={() => alert('Funcionalidade não disponível em JSON estático')}
               >
                 <FiPrinter className="mr-2" />

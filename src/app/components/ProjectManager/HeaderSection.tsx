@@ -7,25 +7,18 @@ interface HeaderSectionProps {
   onNewProject: () => void;
 }
 
-export default function HeaderSection({
-  searchTerm,
-  onSearchChange,
-  onNewProject
-}: HeaderSectionProps) {
+export default function HeaderSection({ searchTerm, onSearchChange, onNewProject }: HeaderSectionProps) {
   return (
     <div className="mb-8">
-      <h1 className="text-3xl font-bold mb-2">Gerenciador de Projetos</h1>
+      <h1 className="mb-2 font-bold text-3xl">Gerenciador de Projetos</h1>
       <p className="text-gray-400">Monitore e gerencie todas as etapas dos seus projetos</p>
-      
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-6 gap-4">
-        <SearchBar
-          value={searchTerm}
-          onChange={onSearchChange}
-          placeholder="Buscar projetos..."
-        />
-        <button 
+
+      <div className="mt-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+        <SearchBar value={searchTerm} onChange={onSearchChange} placeholder="Buscar projetos..." />
+        <button
+          type="button"
           onClick={onNewProject}
-          className="flex items-center bg-[#0A4338] hover:bg-[#062E29] text-white px-4 py-2 rounded-lg transition-colors w-full md:w-auto justify-center"
+          className="flex w-full items-center justify-center rounded-lg bg-[#0A4338] px-4 py-2 text-white transition-colors hover:bg-[#062E29] md:w-auto"
         >
           <FiPlus className="mr-2" />
           Novo Projeto

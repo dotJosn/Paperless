@@ -1,6 +1,6 @@
 import { FiSearch } from 'react-icons/fi';
 import ProjectCard from '@/app/components/ProjectCard';
-import { Project } from '@/app/lib/types/project';
+import type { Project } from '@/app/lib/types/project';
 
 interface ProjectsListProps {
   projects: Project[];
@@ -30,9 +30,9 @@ export default function ProjectsList({
           />
         ))
       ) : (
-        <div className="bg-[#09212D] rounded-lg p-12 text-center border border-[#0A4338]/30">
-          <FiSearch className="mx-auto text-4xl text-gray-400 mb-5" />
-          <h3 className="text-xl font-semibold mb-2">Nenhum projeto encontrado</h3>
+        <div className="rounded-lg border border-[#0A4338]/30 bg-[#09212D] p-12 text-center">
+          <FiSearch className="mx-auto mb-5 text-4xl text-gray-400" />
+          <h3 className="mb-2 font-semibold text-xl">Nenhum projeto encontrado</h3>
           <p className="text-gray-400">
             {searchTerm ? 'Nenhum projeto corresponde à sua busca' : 'Você ainda não tem projetos criados'}
           </p>
