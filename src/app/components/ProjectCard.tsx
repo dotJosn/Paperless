@@ -24,7 +24,7 @@ export default function ProjectCard({ project, isExpanded, onToggle, onDelete }:
     <div className="overflow-hidden rounded-lg border border-[#0A4338]/30 bg-[#09212D]">
       <div
         className="flex cursor-pointer items-center justify-between p-4 transition-colors hover:bg-[#0A4338]/20"
-        onClick={onToggle}
+        onKeyDown={(e) => e.key === 'Enter' && onToggle()}
       >
         <div className="flex items-center">
           <div className={`mr-3 h-3 w-3 rounded-full ${project.color}`} />
