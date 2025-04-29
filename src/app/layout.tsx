@@ -5,6 +5,7 @@ import { ClerkLoaded, ClerkLoading, ClerkProvider } from '@clerk/nextjs';
 import StarLoader from './components/Loader';
 import { ThemeProvider } from 'next-themes';
 import ThemeCom from './components/ThemeCom';
+import Footer from './components/Footer';
 import Header from './components/Header';
 
 const geistSans = Geist({
@@ -41,8 +42,10 @@ export default function RootLayout({
                 <main>
                   {children}
                 </main>
+                <Footer/>
               </ThemeCom>
             </ThemeProvider>
+
           </ClerkLoaded>
         </body>
       </html>
