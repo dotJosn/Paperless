@@ -1,5 +1,5 @@
-function Page() {
-  return <h1>Hello</h1>;
-}
+import ProjectManager from '@/app/components/ProjectManager';
 
-export default Page;
+export default function ProjectManagerPage() {
+  return <ProjectManager />;
+}
