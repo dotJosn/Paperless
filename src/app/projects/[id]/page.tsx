@@ -1,57 +1,64 @@
-import Link from 'next/link';
-import { FiArrowLeft } from 'react-icons/fi';
-import projectsData from '@/app/lib/storage/projects.json';
-import type { Project } from '@/app/lib/types/project';
-import ActionsPanel from '@/app/components/ActionsPanel';
-import StagesList from '@/app/components/StagesList';
-import ProjectStats from '@/app/components/ProjectStats';
-import { EditButton } from '@/app/components/EditButton';
+import { notFound } from 'next/navigation';
+import { dataProjects } from '@/data/projects';
+import { ProcessHeader } from '@/app/components/ProcessHeader';
+import { ProcessTable } from '@/app/components/ProcessTable';
 
-export async function generateStaticParams() {
-  return projectsData.map((project) => ({
-    id: project.id
-  }));
-}
-
-async function getProject(id: string): Promise<Project | undefined> {
-  return projectsData.find((p) => p.id === id) as Project | undefined;
-}
-
-export default async function ProjectDetails({
-  params
-}: {
+interface PageProps {
   params: { id: string };
-}) {
-  const project = await getProject(params.id);
+}
+
+export default async function ProjectPage(context: { params: { id: string } }) {
+  const { params } = context;
+  const { id } = await Promise.resolve(params); // work-around
+  
+  const project = dataProjects.find(p => p.id === id);
 
   if (!project) {
-    return <div className="flex min-h-screen items-center justify-center bg-gray-900 p-6 text-white">Projeto não encontrado</div>;
+    return notFound();
   }
 
-  const progress = Math.round((project.stages.filter((s) => s.status === 'completed').length / project.stages.length) * 100);
+  // Prepara os dados para o cabeçalho
+  const headerData = {
+    material: project.material,
+    printedDate: project.details.header.printedDate,
+    programFolder: project.details.header.programFolder,
+    projectFolder: project.details.header.projectFolder,
+    programmer: project.programmer,
+    projectTime: project.summary.totalTime,
+  };
+
+  // Mapeia as operações para o formato esperado pela tabela
+  const steps = project.details.operations.map(operation => ({
+    id: operation.id,
+    type: operation.tipoPercurso,
+    reference: operation.referencia,
+    comment: operation.comentario,
+    diameter: Number.parseFloat(operation.diametro.replace(",", ".")),
+    rc: operation.rc ? Number.parseFloat(operation.rc) : undefined,
+    rib: Number.parseFloat(operation.rib),
+    height: Number.parseFloat(operation.altura),
+    zMin: Number.parseFloat(operation.zMin),
+    lat2D: operation.sobreEspessura.lat2D ? Number.parseFloat(operation.sobreEspessura.lat2D.replace(",", ".")) : undefined,
+    lat: operation.sobreEspessura.lat ? Number.parseFloat(operation.sobreEspessura.lat.replace(",", ".")) : undefined,
+    vert: operation.sobreEspessura.vert ? Number.parseFloat(operation.sobreEspessura.vert.replace(",", ".")) : undefined,
+    stepLat: operation.passo.lat ? Number.parseFloat(operation.passo.lat.replace(",", ".")) : undefined,
+    stepVert: operation.passo.vert ? Number.parseFloat(operation.passo.vert.replace(",", ".")) : undefined,
+    tolerance: Number.parseFloat(operation.tolerancia.replace(",", ".")),
+    rotation: Number.parseFloat(operation.rotacao),
+    advance: Number.parseFloat(operation.avanço),
+    angle: operation.plano,
+    workPlane: operation.planoTrabalho,
+    cutTime: operation.tempo.corte,
+    totalTime: operation.tempo.total,
+    cutter: operation.ferramenta,
+    support: operation.suporte,
+    postProcessor: "POS FIDIA G17 - 3 EIXOS.pmoptz"
+  }));
 
   return (
-    <main className="min-h-screen bg-gray-900 p-6 text-white">
-      <div className="container mx-auto px-4 py-8">
-        <Link href="/" className="mb-6 flex items-center text-white transition-colors hover:text-gray-300">
-          <FiArrowLeft className="mr-2" /> Voltar para projetos
-        </Link>
-
-        <div className="mb-6 flex items-start justify-between">
-          <div>
-            <h1 className="mb-2 font-bold text-2xl text-white md:text-3xl">{project.name}</h1>
-            <p className="text-gray-300">{project.description}</p>
-          </div>
-          <EditButton />
-        </div>
-
-        <ProjectStats progress={progress} members={project.members} />
-
-        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-          <StagesList stages={project.stages} />
-          <ActionsPanel />
-        </div>
-      </div>
-    </main>
+    <div className="min-h-screen bg-gray-50 p-4">
+      <ProcessHeader {...headerData} />
+      <ProcessTable steps={steps} />
+    </div>
   );
 }
